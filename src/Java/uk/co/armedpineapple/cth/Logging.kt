@@ -106,11 +106,15 @@ private inline fun log(
         val logMessage = message?.toString() ?: "null"
         if (throwable != null) {
             throwableLogFunction(tag, logMessage, throwable)
-            Firebase.crashlytics.log(logMessage)
-            Firebase.crashlytics.recordException(throwable)
+            if (BuildConfig.FIREBASE_ENABLED) {
+                Firebase.crashlytics.log(logMessage)
+                Firebase.crashlytics.recordException(throwable)
+            }
         } else {
             logFunction(tag, logMessage)
-            Firebase.crashlytics.log(logMessage)
+            if (BuildConfig.FIREBASE_ENABLED) {
+                Firebase.crashlytics.log(logMessage)
+            }
         }
     }
 }

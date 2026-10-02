@@ -276,6 +276,7 @@ class GameActivity : SDLActivity(), Loggable {
         @Keep
         @JvmStatic
         fun onGameError(handler: ByteArray?, stack: ByteArray?) {
+            if (!BuildConfig.FIREBASE_ENABLED) return
             Firebase.crashlytics.recordException(
                 if (handler != null) {
                     NativeLuaHandlerException(handler, stack)

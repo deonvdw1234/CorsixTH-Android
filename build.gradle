@@ -22,9 +22,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: 'versioning.gradle'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.google.firebase.firebase-perf'
+
+// Firebase is optional: only applied when a non-empty google-services.json is present.
+def googleServicesFile = file('google-services.json')
+ext.firebaseEnabled = googleServicesFile.exists() && googleServicesFile.length() > 0
+if (firebaseEnabled) {
+    apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.firebase.crashlytics'
+    apply plugin: 'com.google.firebase.firebase-perf'
+}
 
 repositories {
     google()
@@ -83,6 +89,8 @@ android {
 
         versionName = project.ext.buildVersion
         versionCode = project.ext.offsetBuildVersionCode
+
+        buildConfigField "boolean", "FIREBASE_ENABLED", "${project.ext.firebaseEnabled}"
     }
 
     compileOptions {
@@ -112,8 +120,10 @@ android {
             } else {
                 signingConfig signingConfigs.debug
             }
-            firebaseCrashlytics {
-                nativeSymbolUploadEnabled true
+            if (project.ext.firebaseEnabled) {
+                firebaseCrashlytics {
+                    nativeSymbolUploadEnabled true
+                }
             }
         }
 

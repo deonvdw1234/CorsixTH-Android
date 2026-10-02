@@ -71,6 +71,7 @@ class Reporting(private val context: Context) {
             .putBoolean(context.getString(R.string.prefs_has_requested_consent), true)
             .putBoolean(context.getString(R.string.prefs_consent), consent).apply()
 
+        if (!BuildConfig.FIREBASE_ENABLED) return
         Firebase.crashlytics.setCrashlyticsCollectionEnabled(consent)
         Firebase.analytics.setAnalyticsCollectionEnabled(consent)
     }
