@@ -1,11 +1,9 @@
 name: Android CI
 
+# Upstream workflow: needs secrets this fork does not have, so it only runs
+# when triggered by hand. Use nieto_build.yml instead.
 on:
-  push:
-    branches: 
-      - 'dev'
-  pull_request:
-    branches: [ "dev" ]
+  workflow_dispatch:
 
 jobs:
   build:
