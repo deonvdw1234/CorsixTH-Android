@@ -44,4 +44,5 @@ Firebase, no Google Play Games (all removed from the upstream code).
 ## Status
 - Phase 1 (investigation) and Phase 2 (secret-free CI, own applicationId,
   optional keystore) done. Google Play Games and Firebase removed. Phone usability:
-  resolution setting fix, rotation off by default, bigger gear touch area.
+  resolution setting fix, rotation off by default, bigger gear touch area,
+  Rotate Object button when placing items.

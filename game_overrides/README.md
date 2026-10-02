@@ -13,6 +13,7 @@ the original it replaces, and every change is marked "Nieto Software".
 |---|---|
 | `Lua/dialogs/android_play_menu.lua` | Hides the Google Play Games icons, which do nothing in this build |
 | `Lua/dialogs/android_menu_button.lua` | Larger touch area for the in-game menu (gear) button |
+| `Lua/dialogs/place_objects.lua` | "Rotate Object" button under the object list when placing items |
 
 When the submodule is updated, compare each file against its new original and
 carry the marked changes across.
