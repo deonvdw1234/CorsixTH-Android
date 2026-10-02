@@ -9,6 +9,8 @@
         android:smallScreens="false"
         android:xlargeScreens="true" />
 
+    <!-- Needed for the Theme Hospital demo download. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
 
     <application
@@ -18,9 +20,6 @@
         android:theme="@style/Theme.AppTheme"
         android:gwpAsanMode="always"
         tools:targetApi="r">
-
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="@string/app_id"/>
 
         <!-- Overscan, rather than letterboxing -->
         <meta-data

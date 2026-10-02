@@ -48,7 +48,6 @@ class GameActivity : SDLActivity(), Loggable {
         StatisticsService((application as CTHApplication).statsDatabase)
     }
 
-    private lateinit var playGamesService: PlayGamesService
 
     @get:Keep
     val gameEventHandler by lazy {
@@ -64,7 +63,6 @@ class GameActivity : SDLActivity(), Loggable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         singleton = this
-        playGamesService = PlayGamesService(this, statisticsService)
 
         val filesService = FilesService(this)
 
@@ -222,6 +220,14 @@ class GameActivity : SDLActivity(), Loggable {
         }
     }
 
+    /** Google Play Games is not included in this build. Called from the game thread. */
+    private fun showPlayGamesUnavailable() {
+        runOnUiThread {
+            Toast.makeText(this, getString(R.string.play_games_unavailable), Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
     companion object {
         @JvmStatic
         lateinit var singleton: GameActivity
@@ -250,13 +256,13 @@ class GameActivity : SDLActivity(), Loggable {
         @Keep
         @JvmStatic
         fun signIn() {
-            singleton.playGamesService.signIn()
+            singleton.showPlayGamesUnavailable()
         }
 
         @Keep
         @JvmStatic
         fun showAchievements() {
-            singleton.playGamesService.showAchievements()
+            singleton.showPlayGamesUnavailable()
         }
 
         @Keep

@@ -5,8 +5,8 @@ Created by Nieto Software
 ## Project summary
 Personal, ad-free fork of CorsixTH-Android (Alan Woolley's Android port of the
 CorsixTH engine, an open source reimplementation of Theme Hospital). GPL v3.
-Kotlin app shell + native engine built with ndk-build. Upstream contains no ads,
-but does ship Firebase (Crashlytics, Analytics, Perf) and Google Play Games.
+Kotlin app shell + native engine built with ndk-build. No ads. Google Play Games is
+removed; Firebase (Crashlytics, Analytics, Perf) is optional and off in our CI.
 
 ## Build requirements
 - Gradle 8.9 (wrapper), Android Gradle Plugin 8.7.3, Kotlin 2.0.21, KSP 2.0.21-1.0.28
@@ -24,7 +24,7 @@ but does ship Firebase (Crashlytics, Analytics, Perf) and Google Play Games.
 - `src/Java/uk/co/armedpineapple/cth/`: Kotlin sources
   - `setup/SetupViewModel.kt`: folder import, GOG installer, demo download
   - `Reporting.kt`, `Logging.kt`: Firebase consent and Crashlytics
-  - `PlayGamesService.kt`, `AchievementsTracker.kt`: Google Play Games
+  - `GameActivity.kt`: `signIn()`/`showAchievements()` are JNI stubs kept for the Lua menu
 - `res/`: resources and translations (Crowdin)
 - `jni/`: native code. `CorsixTH` (submodule), `SDL`, `SDL_mixer`, `SDL_gfx`, `LUA`,
   `LPEG`, `LFS`, `freetype2`, `lodepng`, `ffmpeg` (prebuilt static libs)
@@ -45,4 +45,4 @@ but does ship Firebase (Crashlytics, Analytics, Perf) and Google Play Games.
 
 ## Status
 - Phase 1 (investigation) and Phase 2 (secret-free CI, own applicationId,
-  optional Firebase) done. Google Play Games is still included.
+  optional Firebase, optional keystore) done. Google Play Games removed.
