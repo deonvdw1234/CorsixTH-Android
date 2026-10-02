@@ -29,8 +29,6 @@ Firebase, no Google Play Games (all removed from the upstream code).
 - `assets/game.zip`: generated at build time from the CorsixTH submodule Lua files
 - `.github/workflows/nieto_build.yml`: our CI, uploads a release APK. Signs with optional
   `NIETO_KEYSTORE*` secrets if set, else the debug key
-- `.github/workflows/android-ci.yml`, `build_and_sign.yml`: upstream, manual trigger only,
-  will no longer work (they expect Firebase)
 
 ## Rules for this fork
 - Small, careful steps; commit with clear messages, then push the working branch.
