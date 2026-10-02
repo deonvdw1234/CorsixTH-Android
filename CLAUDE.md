@@ -26,7 +26,8 @@ Firebase, no Google Play Games (all removed from the upstream code).
 - `res/`: resources and translations (Crowdin)
 - `jni/`: native code. `CorsixTH` (submodule), `SDL`, `SDL_mixer`, `SDL_gfx`, `LUA`,
   `LPEG`, `LFS`, `freetype2`, `lodepng`, `ffmpeg` (prebuilt static libs)
-- `assets/game.zip`: generated at build time from the CorsixTH submodule Lua files
+- `assets/game.zip`: generated at build time from the CorsixTH submodule Lua files, with
+  edited copies from `game_overrides/` taking priority (see its README)
 - `.github/workflows/nieto_build.yml`: our CI, uploads a release APK. Signs with optional
   `NIETO_KEYSTORE*` secrets if set, else the debug key
 
@@ -42,4 +43,5 @@ Firebase, no Google Play Games (all removed from the upstream code).
 
 ## Status
 - Phase 1 (investigation) and Phase 2 (secret-free CI, own applicationId,
-  optional keystore) done. Google Play Games and Firebase removed.
+  optional keystore) done. Google Play Games and Firebase removed. Phone usability:
+  resolution setting fix, rotation off by default, bigger gear touch area.

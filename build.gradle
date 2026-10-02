@@ -156,6 +156,11 @@ tasks.register('createGameZip', Zip) {
     destinationDirectory = file('assets')
     archiveFileName = 'game.zip'
 
+    // Our edited copies of individual game files go in first and win over the
+    // originals from the submodule, which keeps the submodule untouched.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from('game_overrides')
+
     from('jni/CorsixTH/CorsixTH') {
         include 'Levels/**'
         include 'Campaigns/**'
