@@ -159,19 +159,6 @@ class SettingsActivity : AppCompatActivity(), Loggable,
         }
     }
 
-    class AnalyticsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.analytics_preferences, rootKey)
-
-            val context = requireContext()
-            val application = (context.applicationContext as CTHApplication)
-            findPreference<Preference>(context.getString(R.string.prefs_policy))?.setOnPreferenceClickListener {
-                application.reporting.openPrivacyPolicy()
-                true
-            }
-        }
-    }
-
     class UpgradeFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.upgrade_preferences, rootKey)

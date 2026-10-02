@@ -8,8 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.Keep
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -282,9 +280,8 @@ class GameActivity : SDLActivity(), Loggable {
         @Keep
         @JvmStatic
         fun onGameError(handler: ByteArray?, stack: ByteArray?) {
-            if (!BuildConfig.FIREBASE_ENABLED) return
-            Firebase.crashlytics.recordException(
-                if (handler != null) {
+            Log.e(
+                "GameActivity", "Game error", if (handler != null) {
                     NativeLuaHandlerException(handler, stack)
                 } else {
                     NativeLuaException(stack, "Game Error")

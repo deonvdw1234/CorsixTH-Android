@@ -1,6 +1,6 @@
 # Nieto Software build: a release APK, uploaded as a downloadable artifact.
-# Needs no repository secrets. Firebase is left out because there is no
-# google-services.json (see build.gradle).
+# Needs no repository secrets. The app contains no Firebase or Google Play
+# services code.
 #
 # Signing: if the optional secrets below are set, the APK is signed with your
 # own keystore, so each new build installs as an update over the last one.

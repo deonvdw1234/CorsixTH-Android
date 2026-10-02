@@ -42,10 +42,6 @@ class CTHApplication : android.app.Application() {
         currentVersion > lastLaunchVersion
     }
 
-    val reporting : Reporting by lazy {
-        Reporting(this)
-    }
-
     override fun onCreate() {
         super.onCreate()
         initConfiguration()

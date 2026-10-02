@@ -32,25 +32,6 @@
             android:name="SDL_ENV.SDL_TOUCH_MOUSE_EVENTS"
             android:value="false" />
 
-        <!-- Don't enable crashlytics or analytics collection by default. Opt-in is used instead. -->
-        <meta-data
-            android:name="firebase_crashlytics_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-
-        <!-- Don't enable anything in analytics that we don't need or aren't interesting. -->
-        <meta-data
-            android:name="google_analytics_adid_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="google_analytics_default_allow_ad_personalization_signals"
-            android:value="false" />
-        <meta-data
-            android:name="google_analytics_ssaid_collection_enabled"
-            android:value="false" />
-
         <activity
             android:name="uk.co.armedpineapple.cth.GameActivity"
             android:configChanges="layoutDirection|locale|orientation|uiMode|screenLayout|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"

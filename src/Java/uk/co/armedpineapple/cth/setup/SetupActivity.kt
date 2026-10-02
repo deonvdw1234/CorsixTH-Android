@@ -9,8 +9,6 @@ import android.os.IBinder
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import uk.co.armedpineapple.cth.BuildConfig
-import uk.co.armedpineapple.cth.CTHApplication
 import uk.co.armedpineapple.cth.R
 import uk.co.armedpineapple.innoextract.service.ExtractService
 
@@ -43,11 +41,6 @@ class SetupActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, SetupFragment.newInstance()).commitNow()
-
-            val application = application as CTHApplication
-            if (BuildConfig.FIREBASE_ENABLED && !application.reporting.hasRequestedConsent()) {
-                application.reporting.requestConsent(this)
-            }
         }
     }
 
