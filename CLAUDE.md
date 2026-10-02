@@ -29,7 +29,8 @@ but does ship Firebase (Crashlytics, Analytics, Perf) and Google Play Games.
 - `jni/`: native code. `CorsixTH` (submodule), `SDL`, `SDL_mixer`, `SDL_gfx`, `LUA`,
   `LPEG`, `LFS`, `freetype2`, `lodepng`, `ffmpeg` (prebuilt static libs)
 - `assets/game.zip`: generated at build time from the CorsixTH submodule Lua files
-- `.github/workflows/nieto_build.yml`: our CI, no secrets, uploads a debug-signed release APK
+- `.github/workflows/nieto_build.yml`: our CI, uploads a release APK. Signs with optional
+  `NIETO_KEYSTORE*` secrets if set, else the debug key
 - `.github/workflows/android-ci.yml`, `build_and_sign.yml`: upstream, manual trigger only
 
 ## Rules for this fork

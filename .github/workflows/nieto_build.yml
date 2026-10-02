@@ -1,6 +1,14 @@
-# Nieto Software build: a release APK signed with the debug key.
+# Nieto Software build: a release APK, uploaded as a downloadable artifact.
 # Needs no repository secrets. Firebase is left out because there is no
 # google-services.json (see build.gradle).
+#
+# Signing: if the optional secrets below are set, the APK is signed with your
+# own keystore, so each new build installs as an update over the last one.
+# Without them it is signed with a throwaway debug key that changes per run.
+#   NIETO_KEYSTORE           base64 of the .jks file (base64 -w0 my.jks)
+#   NIETO_KEYSTORE_PASSWORD  keystore password
+#   NIETO_KEY_ALIAS          key alias
+#   NIETO_KEY_PASSWORD       key password
 # Created by Nieto Software
 
 name: Nieto Build
@@ -33,12 +41,27 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - name: Decode signing keystore (optional)
+        env:
+          NIETO_KEYSTORE: ${{ secrets.NIETO_KEYSTORE }}
+        run: |
+          if [ -n "$NIETO_KEYSTORE" ]; then
+            echo "$NIETO_KEYSTORE" | base64 -d > "$RUNNER_TEMP/nieto.jks"
+            echo "RELEASE_STORE_FILE=$RUNNER_TEMP/nieto.jks" >> "$GITHUB_ENV"
+            echo "Signing with the NIETO_KEYSTORE secret."
+          else
+            echo "No NIETO_KEYSTORE secret, signing with the debug key."
+          fi
+
       - name: Build APK
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease --stacktrace
         env:
           BUILD_NUMBER: ${{ github.run_number }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.NIETO_KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.NIETO_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.NIETO_KEY_PASSWORD }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
