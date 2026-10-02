@@ -84,6 +84,7 @@ configurations.configureEach {
 android {
     namespace 'uk.co.armedpineapple.cth'
     defaultConfig {
+        applicationId "za.co.nietosoftware.cth"
         minSdkVersion 27
         targetSdkVersion 35
 
