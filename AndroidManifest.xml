@@ -9,6 +9,8 @@
         android:smallScreens="false"
         android:xlargeScreens="true" />
 
+    <!-- Needed for the Theme Hospital demo download. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
 
     <application
@@ -19,9 +21,6 @@
         android:gwpAsanMode="always"
         tools:targetApi="r">
 
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="@string/app_id"/>
-
         <!-- Overscan, rather than letterboxing -->
         <meta-data
             android:name="SDL_ENV.SDL_HINT_RENDER_LOGICAL_SIZE_MODE"
@@ -31,25 +30,6 @@
         so that we get better control -->
         <meta-data
             android:name="SDL_ENV.SDL_TOUCH_MOUSE_EVENTS"
-            android:value="false" />
-
-        <!-- Don't enable crashlytics or analytics collection by default. Opt-in is used instead. -->
-        <meta-data
-            android:name="firebase_crashlytics_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-
-        <!-- Don't enable anything in analytics that we don't need or aren't interesting. -->
-        <meta-data
-            android:name="google_analytics_adid_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="google_analytics_default_allow_ad_personalization_signals"
-            android:value="false" />
-        <meta-data
-            android:name="google_analytics_ssaid_collection_enabled"
             android:value="false" />
 
         <activity

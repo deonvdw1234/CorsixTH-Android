@@ -8,9 +8,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:8.7.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.4.2'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
-        classpath 'com.google.firebase:perf-plugin:1.4.2'
     }
 }
 
@@ -22,9 +19,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: 'versioning.gradle'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.google.firebase.firebase-perf'
 
 repositories {
     google()
@@ -56,12 +50,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
 
-    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ndk:19.3.0'
-    implementation 'com.google.firebase:firebase-analytics:22.1.2'
-    implementation 'com.google.firebase:firebase-perf:21.0.3'
-
-    implementation 'com.google.android.gms:play-services-games-v2:20.1.2'
 
     def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"
@@ -78,6 +66,7 @@ configurations.configureEach {
 android {
     namespace 'uk.co.armedpineapple.cth'
     defaultConfig {
+        applicationId "za.co.nietosoftware.cth"
         minSdkVersion 27
         targetSdkVersion 35
 
@@ -111,9 +100,6 @@ android {
                 signingConfig signingConfigs.release
             } else {
                 signingConfig signingConfigs.debug
-            }
-            firebaseCrashlytics {
-                nativeSymbolUploadEnabled true
             }
         }
 
@@ -169,6 +155,11 @@ tasks.register('createGameZip', Zip) {
 
     destinationDirectory = file('assets')
     archiveFileName = 'game.zip'
+
+    // Our edited copies of individual game files go in first and win over the
+    // originals from the submodule, which keeps the submodule untouched.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from('game_overrides')
 
     from('jni/CorsixTH/CorsixTH') {
         include 'Levels/**'

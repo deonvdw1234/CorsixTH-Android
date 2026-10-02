@@ -40,7 +40,7 @@
         <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:icon="@drawable/baseline_stay_primary_portrait_24"
             android:key="@string/prefs_rotate_portrait"
             android:summary="@string/allow_rotation_desc"

@@ -1,0 +1,71 @@
+# Nieto Software build: a release APK, uploaded as a downloadable artifact.
+# Needs no repository secrets. The app contains no Firebase or Google Play
+# services code.
+#
+# Signing: if the optional secrets below are set, the APK is signed with your
+# own keystore, so each new build installs as an update over the last one.
+# Without them it is signed with a throwaway debug key that changes per run.
+#   NIETO_KEYSTORE           base64 of the .jks file (base64 -w0 my.jks)
+#   NIETO_KEYSTORE_PASSWORD  keystore password
+#   NIETO_KEY_ALIAS          key alias
+#   NIETO_KEY_PASSWORD       key password
+# Created by Nieto Software
+
+name: Nieto Build
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: nieto-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out code and the CorsixTH submodule
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Decode signing keystore (optional)
+        env:
+          NIETO_KEYSTORE: ${{ secrets.NIETO_KEYSTORE }}
+        run: |
+          if [ -n "$NIETO_KEYSTORE" ]; then
+            echo "$NIETO_KEYSTORE" | base64 -d > "$RUNNER_TEMP/nieto.jks"
+            echo "RELEASE_STORE_FILE=$RUNNER_TEMP/nieto.jks" >> "$GITHUB_ENV"
+            echo "Signing with the NIETO_KEYSTORE secret."
+          else
+            echo "No NIETO_KEYSTORE secret, signing with the debug key."
+          fi
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --stacktrace
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.NIETO_KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.NIETO_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.NIETO_KEY_PASSWORD }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CorsixTH-Nieto-${{ github.run_number }}
+          path: build/outputs/apk/release/*.apk
+          if-no-files-found: error

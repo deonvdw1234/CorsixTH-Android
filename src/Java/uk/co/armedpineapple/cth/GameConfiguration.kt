@@ -27,8 +27,10 @@ class GameConfiguration(private val ctx: Context, private val preferences: Share
 
     val unicodeFont = File(ctx.noBackupFilesDir, "fonts/DroidSansFallbackFull.ttf")
 
-    var resolution: Pair<UInt, UInt> =
-        decodeResolution(getStringPref(R.string.prefs_display_resolution).toUInt())
+    // Read on every use, so a change in Settings applies on the next game start
+    // even when Android has kept the app process alive.
+    val resolution: Pair<UInt, UInt>
+        get() = decodeResolution(getStringPref(R.string.prefs_display_resolution).toUInt())
 
     val allowPortrait : Boolean by createReadOnlyOption(R.string.prefs_rotate_portrait)
 
